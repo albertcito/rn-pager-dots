@@ -3,7 +3,7 @@ import React, { useRef, useState } from "react";
 import { NativeScrollEvent, NativeSyntheticEvent, ScrollView, useWindowDimensions, View } from "react-native";
 
 export default function Index() {
-  const {width: windowWidth, height: windowHeight} = useWindowDimensions();
+  const {width: windowWidth } = useWindowDimensions();
   const [dots] = useState(4);
 
   const [activeDots, setActiveDots] = useState(1);
@@ -36,22 +36,22 @@ export default function Index() {
         {[...Array(dots)].map((_, index) =>(
           <View
             key={index}
-            className="bg-black snap-always snap-center"
+            className="bg-black snap-always snap-center w-screen h-screen"
             style={{
               opacity: index * 0.1,
-              width: windowWidth,
-              height: windowHeight,
             }}
           />
         ))}
       </ScrollView>
-      <View className="flex-row m-10 absolute">
+      <View className="flex-row absolute bottom-0 w-full">
+        <View className="flex flex-row justify-center w-full pb-4">
         <Dots
           dots={dots}
           active={activeDots}
           onPressDot={onPressDot}
           ui={{ bg: 'bg-blue-600'}}
         />
+        </View>
       </View>
     </View>
   );
