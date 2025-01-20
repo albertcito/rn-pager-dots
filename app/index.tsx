@@ -1,10 +1,16 @@
 import Dots from  '../ui/dots';
 import React, { useRef, useState } from "react";
-import { NativeScrollEvent, NativeSyntheticEvent, ScrollView, useWindowDimensions, View } from "react-native";
+import { NativeScrollEvent, NativeSyntheticEvent, ScrollView, Text, useWindowDimensions, View } from "react-native";
+
+const texts = [
+  { text: 'I' },
+  { text: 'love' },
+  { text: 'you' },
+  { text: '❤️' },
+];
 
 export default function Index() {
   const {width: windowWidth } = useWindowDimensions();
-  const [dots] = useState(4);
 
   const [activeDots, setActiveDots] = useState(1);
   const scrollViewRef = useRef<ScrollView>(null);
@@ -28,25 +34,27 @@ export default function Index() {
         horizontal
         decelerationRate="fast"
         snapToInterval={windowWidth}
+        showsHorizontalScrollIndicator={false}
         onScroll={handleScroll}
-        scrollEventThrottle={400}
+        scrollEventThrottle={200}
         snapToAlignment="center"
         className="snap-x snap-mandatory"
       >
-        {[...Array(dots)].map((_, index) =>(
+        {texts.map((value, index) =>(
           <View
             key={index}
-            className="bg-black snap-always snap-center w-screen h-screen"
-            style={{
-              opacity: index * 0.1,
-            }}
-          />
+            className="bg-black snap-always snap-center w-screen h-screen flex items-center justify-center"
+          >
+            <Text className="text-white text-[150px]">
+              {value.text}
+            </Text>
+          </View>
         ))}
       </ScrollView>
       <View className="flex-row absolute bottom-0 w-full">
-        <View className="flex flex-row justify-center w-full pb-4">
+        <View className="flex flex-row justify-center w-full pb-10">
         <Dots
-          dots={dots}
+          dots={texts.length}
           active={activeDots}
           onPressDot={onPressDot}
           ui={{ bg: 'bg-blue-600'}}
